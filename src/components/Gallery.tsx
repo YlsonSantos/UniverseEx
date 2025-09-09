@@ -54,7 +54,7 @@ export function Gallery() {
       if (selectedDate) {
         params.append('earth_date', selectedDate);
       } else {
-        params.append('sol', '1000'); 
+        params.append('sol', '1000');
       }
 
       if (selectedCamera && selectedCamera !== 'all') {
@@ -86,8 +86,8 @@ export function Gallery() {
   };
 
   const handleSearch = () => {
-    setCurrentPage(1);
-    fetchPhotos();
+      setCurrentPage(1);
+      fetchPhotos();
   };
 
   return (
@@ -213,33 +213,31 @@ export function Gallery() {
               ))}
             </div>
 
-            {filteredPhotos.length > 0 && (
-              <div className="flex justify-center items-center space-x-4">
-                <Button
-                  variant="mars-outline"
-                  size="sm"
-                  onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
-                  disabled={currentPage === 1}
-                >
-                  <ChevronLeft className="h-4 w-4 mr-1" />
-                  Anterior
-                </Button>
-                
-                <span className="text-sm text-muted-foreground">
-                  Página {currentPage}
-                </span>
-                
-                <Button
-                  variant="mars-outline"
-                  size="sm"
-                  onClick={() => setCurrentPage(prev => prev + 1)}
-                  disabled={filteredPhotos.length < 25}
-                >
-                  Próxima
-                  <ChevronRight className="h-4 w-4 ml-1" />
-                </Button>
-              </div>
-            )}
+            <div className="flex justify-center items-center space-x-4">
+              <Button
+                variant="mars-outline"
+                size="sm"
+                onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                disabled={currentPage === 1}
+              >
+                <ChevronLeft className="h-4 w-4 mr-1" />
+                Anterior
+              </Button>
+              
+              <span className="text-sm text-muted-foreground">
+                Página {currentPage}
+              </span>
+              
+              <Button
+                variant="mars-outline"
+                size="sm"
+                onClick={() => setCurrentPage(prev => prev + 1)}
+                disabled={filteredPhotos.length < 25}
+              >
+                Próxima
+                <ChevronRight className="h-4 w-4 ml-1" />
+              </Button>
+            </div>
           </>
         )}
 
