@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 @layer base {
   :root {
     --background: 220 15% 8%;
@@ -46,6 +47,9 @@
     --shadow-deep: 0 20px 60px hsl(220 30% 5% / 0.8);
 
     --radius: 0.75rem;
+
+    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
 }
 
@@ -53,14 +57,85 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
     background: var(--gradient-space);
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
   }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--space-deep));
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--mars-glow));
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--accent));
+  }
 }
 
 @layer components {
+  .mars-planet {
+    animation: rotate-planet 60s linear infinite, mars-glow 3s ease-in-out infinite alternate;
+    filter: drop-shadow(var(--glow-mars));
+  }
+
+  @keyframes rotate-planet {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  @keyframes mars-glow {
+    from { filter: drop-shadow(var(--glow-mars)); }
+    to { filter: drop-shadow(0 0 40px hsl(15 85% 58% / 0.6)); }
+  }
+
+  .fade-in {
+    animation: fade-in 0.8s ease-out forwards;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  .fade-in-delay {
+    animation: fade-in 0.8s ease-out 0.3s forwards;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  @keyframes fade-in {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .hover-glow {
+    transition: var(--transition-smooth);
+  }
+
+  .hover-glow:hover {
+    box-shadow: var(--glow-soft);
+    transform: translateY(-2px);
+  }
+
+  .nebula-bg {
+    background: var(--gradient-nebula);
+    animation: nebula-drift 20s ease-in-out infinite alternate;
+  }
+
+  @keyframes nebula-drift {
+    from { transform: translate(-10px, -10px) scale(1); }
+    to { transform: translate(10px, 10px) scale(1.1); }
+  }
+
   .glass-effect {
     background: hsl(var(--card) / 0.7);
     backdrop-filter: blur(12px);
@@ -69,5 +144,15 @@
 
   .text-mars-glow {
     text-shadow: 0 0 20px hsl(var(--mars-glow) / 0.5);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
   }
 }
