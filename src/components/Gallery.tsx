@@ -27,7 +27,6 @@ export function Gallery() {
   const [selectedPhoto, setSelectedPhoto] = useState<MarsPhoto | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
 
-  // Filters
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedRover, setSelectedRover] = useState("");
   const [selectedCamera, setSelectedCamera] = useState("");
