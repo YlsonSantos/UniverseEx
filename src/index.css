@@ -1,68 +1,73 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
+@layer base {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    --background: 220 15% 8%;
+    --foreground: 40 15% 95%;
+
+    --card: 220 20% 12%;
+    --card-foreground: 40 15% 92%;
+
+    --popover: 220 25% 10%;
+    --popover-foreground: 40 15% 95%;
+
+    --primary: 15 85% 58%;
+    --primary-foreground: 220 15% 8%;
+
+    --secondary: 220 25% 18%;
+    --secondary-foreground: 40 15% 90%;
+
+    --muted: 220 20% 15%;
+    --muted-foreground: 40 8% 65%;
+
+    --accent: 30 90% 65%;
+    --accent-foreground: 220 15% 8%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 40 15% 95%;
+
+    --border: 220 25% 20%;
+    --input: 220 25% 16%;
+    --ring: 15 85% 58%;
+
+    --mars-glow: 15 85% 58%;
+    --mars-secondary: 25 75% 45%;
+    --space-deep: 220 30% 5%;
+    --nebula: 260 70% 25%;
+
+    --gradient-mars: linear-gradient(135deg, hsl(15 85% 58%) 0%, hsl(25 75% 45%) 50%, hsl(35 65% 35%) 100%);
+    --gradient-space: linear-gradient(180deg, hsl(220 30% 5%) 0%, hsl(220 20% 8%) 50%, hsl(220 15% 12%) 100%);
+    --gradient-nebula: radial-gradient(circle, hsl(260 70% 25% / 0.3) 0%, transparent 70%);
+
+    --glow-mars: 0 0 30px hsl(15 85% 58% / 0.4);
+    --glow-soft: 0 0 20px hsl(15 85% 58% / 0.2);
+    --shadow-deep: 0 20px 60px hsl(220 30% 5% / 0.8);
+
+    --radius: 0.75rem;
   }
-  a:hover {
-    color: #747bff;
+}
+
+@layer base {
+  * {
+    @apply border-border;
   }
-  button {
-    background-color: #f9f9f9;
+  body {
+    @apply bg-background text-foreground;
+    background: var(--gradient-space);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+}
+
+@layer components {
+  .glass-effect {
+    background: hsl(var(--card) / 0.7);
+    backdrop-filter: blur(12px);
+    border: 1px solid hsl(var(--border) / 0.3);
+  }
+
+  .text-mars-glow {
+    text-shadow: 0 0 20px hsl(var(--mars-glow) / 0.5);
   }
 }
