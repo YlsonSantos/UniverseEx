@@ -15,7 +15,6 @@ const buttonVariants = cva(
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        // Mars Theme Variants
         mars: "bg-gradient-mars text-primary-foreground hover:shadow-glow-mars hover:-translate-y-1 transition-all duration-300",
         "mars-outline": "border-2 border-mars bg-transparent text-mars hover:bg-mars hover:text-primary-foreground hover:shadow-glow-soft transition-all duration-300",
         "space-glass": "glass-effect text-foreground hover:bg-card/80 hover:shadow-glow-soft backdrop-blur-xl",
