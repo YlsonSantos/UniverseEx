@@ -1,0 +1,111 @@
+import { Rocket, Github, Twitter, Mail } from "lucide-react";
+
+export function Footer() {
+  return (
+    <footer className="bg-space-deep border-t border-border/30 py-12">
+      <div className="container mx-auto px-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div className="space-y-4">
+            <div className="flex items-center space-x-2">
+              <Rocket className="h-8 w-8 text-mars" />
+              <span className="text-xl font-bold text-mars-glow">UniverseEx</span>
+            </div>
+            <p className="text-sm text-muted-foreground">
+              Explorando o universo através da tecnologia e dados da NASA.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="font-semibold text-foreground mb-4">Explorar</h3>
+            <div className="space-y-2 text-sm">
+              <a href="#home" className="text-muted-foreground hover:text-mars transition-colors block">
+                Início
+              </a>
+              <a href="#about" className="text-muted-foreground hover:text-mars transition-colors block">
+                Sobre
+              </a>
+              <a href="#gallery" className="text-muted-foreground hover:text-mars transition-colors block">
+                Explore Marte
+              </a>
+            </div>
+          </div>
+
+          <div>
+            <h3 className="font-semibold text-foreground mb-4">Recursos</h3>
+            <div className="space-y-2 text-sm">
+              <a 
+                href="https://api.nasa.gov/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-mars transition-colors block"
+              >
+                API da NASA
+              </a>
+              <a 
+                href="https://mars.nasa.gov/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-mars transition-colors block"
+              >
+                Missões Mars
+              </a>
+              <a 
+                href="https://www.jpl.nasa.gov/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-mars transition-colors block"
+              >
+                JPL NASA
+              </a>
+            </div>
+          </div>
+
+          <div>
+            <h3 className="font-semibold text-foreground mb-4">Sites da NASA</h3>
+            <div className="space-y-2 text-sm">
+              <a 
+                href="https://www.nasa.gov/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-mars transition-colors block"
+              >
+                Site oficial da NASA
+              </a>
+              <a 
+                href="https://www.linkedin.com/company/nasa/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-mars transition-colors block"
+              >
+                LinkedIn da NASA
+              </a>
+              <a 
+                href="https://www.instagram.com/nasa/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-mars transition-colors block"
+              >
+                Instagram da NASA
+              </a>
+              <a 
+                href="https://twitter.com/nasa/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-mars transition-colors block"
+              >
+                Twitter da NASA
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div className="border-t border-border/30 mt-8 pt-8 text-center">
+          <p className="text-sm text-muted-foreground">
+            © 2024 UniverseEx. Dados fornecidos pela NASA. 
+            <span className="text-mars"> Explore o universo responsavelmente.</span>
+          </p>
+        </div>
+      </div>
+    </footer>
+  );
+}
