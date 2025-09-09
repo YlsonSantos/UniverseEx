@@ -2,7 +2,7 @@ import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
 import { About } from "@/components/About";
 import { Gallery } from "@/components/Gallery";
-import { Footer } from "@/components/Footer"; // Importe o novo componente
+import { Footer } from "@/components/Footer"; 
 
 const Index = () => {
   return (
@@ -13,7 +13,7 @@ const Index = () => {
         <About />
         <Gallery />
       </main>
-      <Footer /> {/* Adicione o componente aqui */}
+      <Footer /> 
     </div>
   );
 };
