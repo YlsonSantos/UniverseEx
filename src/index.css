@@ -5,6 +5,7 @@
 
 @layer base {
   :root {
+    /* Cores do Tema Escuro Espacial */
     --background: 220 15% 8%;
     --foreground: 40 15% 95%;
 
@@ -14,6 +15,7 @@
     --popover: 220 25% 10%;
     --popover-foreground: 40 15% 95%;
 
+    /* Tema Laranja/Vermelho de Marte */
     --primary: 15 85% 58%;
     --primary-foreground: 220 15% 8%;
 
@@ -33,21 +35,25 @@
     --input: 220 25% 16%;
     --ring: 15 85% 58%;
 
+    /* Efeitos de Brilho de Marte */
     --mars-glow: 15 85% 58%;
     --mars-secondary: 25 75% 45%;
     --space-deep: 220 30% 5%;
     --nebula: 260 70% 25%;
 
+    /* Gradientes */
     --gradient-mars: linear-gradient(135deg, hsl(15 85% 58%) 0%, hsl(25 75% 45%) 50%, hsl(35 65% 35%) 100%);
     --gradient-space: linear-gradient(180deg, hsl(220 30% 5%) 0%, hsl(220 20% 8%) 50%, hsl(220 15% 12%) 100%);
     --gradient-nebula: radial-gradient(circle, hsl(260 70% 25% / 0.3) 0%, transparent 70%);
 
+    /* Sombras e Brilhos */
     --glow-mars: 0 0 30px hsl(15 85% 58% / 0.4);
     --glow-soft: 0 0 20px hsl(15 85% 58% / 0.2);
     --shadow-deep: 0 20px 60px hsl(220 30% 5% / 0.8);
 
     --radius: 0.75rem;
 
+    /* Variáveis de Animação */
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
@@ -64,6 +70,7 @@
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
   }
 
+  /* Estilização da Barra de Rolagem */
   ::-webkit-scrollbar {
     width: 8px;
   }
@@ -83,6 +90,7 @@
 }
 
 @layer components {
+  /* Animação do Planeta Marte */
   .mars-planet {
     animation: rotate-planet 60s linear infinite, mars-glow 3s ease-in-out infinite alternate;
     filter: drop-shadow(var(--glow-mars));
@@ -98,6 +106,7 @@
     to { filter: drop-shadow(0 0 40px hsl(15 85% 58% / 0.6)); }
   }
 
+  /* Animações de Fade In (Aparecimento Suave) */
   .fade-in {
     animation: fade-in 0.8s ease-out forwards;
     opacity: 0;
@@ -117,6 +126,7 @@
     }
   }
 
+  /* Efeito de Brilho ao Passar o Mouse (Hover) */
   .hover-glow {
     transition: var(--transition-smooth);
   }
@@ -126,6 +136,7 @@
     transform: translateY(-2px);
   }
 
+  /* Fundo de Nebulosa */
   .nebula-bg {
     background: var(--gradient-nebula);
     animation: nebula-drift 20s ease-in-out infinite alternate;
@@ -136,12 +147,14 @@
     to { transform: translate(10px, 10px) scale(1.1); }
   }
 
+  /* Efeito de Vidro (Glass) */
   .glass-effect {
     background: hsl(var(--card) / 0.7);
     backdrop-filter: blur(12px);
     border: 1px solid hsl(var(--border) / 0.3);
   }
 
+  /* Brilho no Texto de Marte */
   .text-mars-glow {
     text-shadow: 0 0 20px hsl(var(--mars-glow) / 0.5);
   }
