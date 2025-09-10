@@ -4,15 +4,15 @@ import { X } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
-const Dialog = DialogPrimitive.Root;
+const Dialogo = DialogPrimitive.Root;
 
-const DialogTrigger = DialogPrimitive.Trigger;
+const AcionadorDialogo = DialogPrimitive.Trigger;
 
-const DialogPortal = DialogPrimitive.Portal;
+const PortalDialogo = DialogPrimitive.Portal;
 
-const DialogClose = DialogPrimitive.Close;
+const FecharDialogo = DialogPrimitive.Close;
 
-const DialogOverlay = React.forwardRef<
+const SobreposicaoDialogo = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Overlay>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>
 >(({ className, ...props }, ref) => (
@@ -25,14 +25,14 @@ const DialogOverlay = React.forwardRef<
     {...props}
   />
 ));
-DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
+SobreposicaoDialogo.displayName = "SobreposicaoDialogo";
 
-const DialogContent = React.forwardRef<
+const ConteudoDialogo = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
 >(({ className, children, ...props }, ref) => (
-  <DialogPortal>
-    <DialogOverlay />
+  <PortalDialogo>
+    <SobreposicaoDialogo />
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
@@ -44,24 +44,24 @@ const DialogContent = React.forwardRef<
       {children}
       <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity data-[state=open]:bg-accent data-[state=open]:text-muted-foreground hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none">
         <X className="h-4 w-4" />
-        <span className="sr-only">Close</span>
+        <span className="sr-only">Fechar</span>
       </DialogPrimitive.Close>
     </DialogPrimitive.Content>
-  </DialogPortal>
+  </PortalDialogo>
 ));
-DialogContent.displayName = DialogPrimitive.Content.displayName;
+ConteudoDialogo.displayName = "ConteudoDialogo";
 
-const DialogHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+const CabecalhoDialogo = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
   <div className={cn("flex flex-col space-y-1.5 text-center sm:text-left", className)} {...props} />
 );
-DialogHeader.displayName = "DialogHeader";
+CabecalhoDialogo.displayName = "CabecalhoDialogo";
 
-const DialogFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+const RodapeDialogo = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
   <div className={cn("flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2", className)} {...props} />
 );
-DialogFooter.displayName = "DialogFooter";
+RodapeDialogo.displayName = "RodapeDialogo";
 
-const DialogTitle = React.forwardRef<
+const TituloDialogo = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Title>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>
 >(({ className, ...props }, ref) => (
@@ -71,25 +71,25 @@ const DialogTitle = React.forwardRef<
     {...props}
   />
 ));
-DialogTitle.displayName = DialogPrimitive.Title.displayName;
+TituloDialogo.displayName = "TituloDialogo";
 
-const DialogDescription = React.forwardRef<
+const DescricaoDialogo = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Description>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Description>
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Description ref={ref} className={cn("text-sm text-muted-foreground", className)} {...props} />
 ));
-DialogDescription.displayName = DialogPrimitive.Description.displayName;
+DescricaoDialogo.displayName = "DescricaoDialogo";
 
 export {
-  Dialog,
-  DialogPortal,
-  DialogOverlay,
-  DialogClose,
-  DialogTrigger,
-  DialogContent,
-  DialogHeader,
-  DialogFooter,
-  DialogTitle,
-  DialogDescription,
+  Dialogo,
+  PortalDialogo,
+  SobreposicaoDialogo,
+  FecharDialogo,
+  AcionadorDialogo,
+  ConteudoDialogo,
+  CabecalhoDialogo,
+  RodapeDialogo,
+  TituloDialogo,
+  DescricaoDialogo,
 };
