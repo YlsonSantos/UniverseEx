@@ -32,7 +32,7 @@ function useCarousel() {
   const context = React.useContext(CarouselContext);
 
   if (!context) {
-    throw new Error("useCarousel must be used within a <Carousel />");
+    throw new Error("useCarousel deve ser usado dentro de um <Carousel />");
   }
 
   return context;
@@ -45,9 +45,9 @@ const Carousel = React.forwardRef<
   const [carouselRef, api] = useEmblaCarousel(
     {
       ...opts,
-      axis: orientation === "horizontal" ? "x" : "y"
+      axis: orientation === "horizontal" ? "x" : "y",
     },
-    plugins
+    plugins,
   );
   const [canScrollPrev, setCanScrollPrev] = React.useState(false);
   const [canScrollNext, setCanScrollNext] = React.useState(false);
@@ -78,7 +78,7 @@ const Carousel = React.forwardRef<
         scrollNext();
       }
     },
-    [scrollPrev, scrollNext]
+    [scrollPrev, scrollNext],
   );
 
   React.useEffect(() => {
@@ -111,7 +111,7 @@ const Carousel = React.forwardRef<
         scrollPrev,
         scrollNext,
         canScrollPrev,
-        canScrollNext
+        canScrollNext,
       }}
     >
       <div
@@ -119,7 +119,7 @@ const Carousel = React.forwardRef<
         onKeyDownCapture={handleKeyDown}
         className={cn("relative", className)}
         role="region"
-        aria-roledescription="carousel"
+        aria-roledescription="carrossel"
         {...props}
       >
         {children}
@@ -142,7 +142,7 @@ const CarouselContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HT
         />
       </div>
     );
-  }
+  },
 );
 CarouselContent.displayName = "CarouselContent";
 
@@ -154,16 +154,16 @@ const CarouselItem = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLD
       <div
         ref={ref}
         role="group"
-        aria-roledescription="slide"
+        aria-roledescription="item"
         className={cn(
           "min-w-0 shrink-0 grow-0 basis-full",
           orientation === "horizontal" ? "pl-4" : "pt-4",
-          className
+          className,
         )}
         {...props}
       />
     );
-  }
+  },
 );
 CarouselItem.displayName = "CarouselItem";
 
@@ -181,17 +181,17 @@ const CarouselPrevious = React.forwardRef<HTMLButtonElement, React.ComponentProp
           orientation === "horizontal"
             ? "-left-12 top-1/2 -translate-y-1/2"
             : "-top-12 left-1/2 -translate-x-1/2 rotate-90",
-          className
+          className,
         )}
         disabled={!canScrollPrev}
         onClick={scrollPrev}
         {...props}
       >
         <ArrowLeft className="h-4 w-4" />
-        <span className="sr-only">Previous slide</span>
+        <span className="sr-only">Slide anterior</span>
       </Button>
     );
-  }
+  },
 );
 CarouselPrevious.displayName = "CarouselPrevious";
 
@@ -209,17 +209,17 @@ const CarouselNext = React.forwardRef<HTMLButtonElement, React.ComponentProps<ty
           orientation === "horizontal"
             ? "-right-12 top-1/2 -translate-y-1/2"
             : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
-          className
+          className,
         )}
         disabled={!canScrollNext}
         onClick={scrollNext}
         {...props}
       >
         <ArrowRight className="h-4 w-4" />
-        <span className="sr-only">Next slide</span>
+        <span className="sr-only">Próximo slide</span>
       </Button>
     );
-  }
+  },
 );
 CarouselNext.displayName = "CarouselNext";
 
