@@ -4,15 +4,15 @@ import { X } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
-const Dialogo = DialogPrimitive.Root;
+const Dialog = DialogPrimitive.Root;
 
-const AcionadorDialogo = DialogPrimitive.Trigger;
+const DialogTrigger = DialogPrimitive.Trigger;
 
-const PortalDialogo = DialogPrimitive.Portal;
+const DialogPortal = DialogPrimitive.Portal;
 
-const FecharDialogo = DialogPrimitive.Close;
+const DialogClose = DialogPrimitive.Close;
 
-const SobreposicaoDialogo = React.forwardRef<
+const DialogOverlay = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Overlay>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>
 >(({ className, ...props }, ref) => (
@@ -25,14 +25,14 @@ const SobreposicaoDialogo = React.forwardRef<
     {...props}
   />
 ));
-SobreposicaoDialogo.displayName = "SobreposicaoDialogo";
+DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
 
-const ConteudoDialogo = React.forwardRef<
+const DialogContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
 >(({ className, children, ...props }, ref) => (
-  <PortalDialogo>
-    <SobreposicaoDialogo />
+  <DialogPortal>
+    <DialogOverlay />
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
@@ -47,21 +47,21 @@ const ConteudoDialogo = React.forwardRef<
         <span className="sr-only">Fechar</span>
       </DialogPrimitive.Close>
     </DialogPrimitive.Content>
-  </PortalDialogo>
+  </DialogPortal>
 ));
-ConteudoDialogo.displayName = "ConteudoDialogo";
+DialogContent.displayName = DialogPrimitive.Content.displayName;
 
-const CabecalhoDialogo = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+const DialogHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
   <div className={cn("flex flex-col space-y-1.5 text-center sm:text-left", className)} {...props} />
 );
-CabecalhoDialogo.displayName = "CabecalhoDialogo";
+DialogHeader.displayName = "DialogHeader";
 
-const RodapeDialogo = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+const DialogFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
   <div className={cn("flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2", className)} {...props} />
 );
-RodapeDialogo.displayName = "RodapeDialogo";
+DialogFooter.displayName = "DialogFooter";
 
-const TituloDialogo = React.forwardRef<
+const DialogTitle = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Title>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>
 >(({ className, ...props }, ref) => (
@@ -71,25 +71,25 @@ const TituloDialogo = React.forwardRef<
     {...props}
   />
 ));
-TituloDialogo.displayName = "TituloDialogo";
+DialogTitle.displayName = DialogPrimitive.Title.displayName;
 
-const DescricaoDialogo = React.forwardRef<
+const DialogDescription = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Description>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Description>
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Description ref={ref} className={cn("text-sm text-muted-foreground", className)} {...props} />
 ));
-DescricaoDialogo.displayName = "DescricaoDialogo";
+DialogDescription.displayName = DialogPrimitive.Description.displayName;
 
 export {
-  Dialogo,
-  PortalDialogo,
-  SobreposicaoDialogo,
-  FecharDialogo,
-  AcionadorDialogo,
-  ConteudoDialogo,
-  CabecalhoDialogo,
-  RodapeDialogo,
-  TituloDialogo,
-  DescricaoDialogo,
+  Dialog,
+  DialogPortal,
+  DialogOverlay,
+  DialogClose,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogFooter,
+  DialogTitle,
+  DialogDescription,
 };
