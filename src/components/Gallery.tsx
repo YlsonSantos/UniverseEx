@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Search, Calendar, Camera, Satellite, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
+import { Search, Camera, Satellite, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -119,7 +119,7 @@ export function Gallery() {
             <Select value={selectedRover} onValueChange={setSelectedRover}>
               <SelectTrigger className="bg-background/50">
                 <Satellite className="h-4 w-4 mr-2" />
-                <SelectValue placeholder="Rover" />
+                <SelectValue placeholder="Selecione um Rover" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">Todos os Rovers</SelectItem>
@@ -134,7 +134,7 @@ export function Gallery() {
             <Select value={selectedCamera} onValueChange={setSelectedCamera}>
               <SelectTrigger className="bg-background/50">
                 <Camera className="h-4 w-4 mr-2" />
-                <SelectValue placeholder="Câmera" />
+                <SelectValue placeholder="Selecione uma Câmera" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">Todas as Câmeras</SelectItem>
