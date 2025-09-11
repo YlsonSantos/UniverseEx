@@ -62,7 +62,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="font-semibold text-foreground mb-4">Redes Sociais</h3>
+            <h3 className="font-semibold text-foreground mb-4">Redes Sociais da NASA</h3>
             <div className="flex items-center gap-4">
               <a 
                 href="https://www.nasa.gov/" 

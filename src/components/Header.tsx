@@ -17,7 +17,7 @@ export function Header() {
 
   return (
     <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? "glass-effect shadow-shadow-deep" : "bg-transparent"}`}>
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 relative">
         <nav className="flex h-16 items-center justify-between">
           <div className="flex items-center space-x-2">
             <img src={marsGlobeIcon} alt="Ícone do Planeta Marte" className="h-8 w-8" />
@@ -49,17 +49,19 @@ export function Header() {
         </nav>
 
         {isMenuOpen && (
-          <div className="glass-effect mt-2 animate-fade-in rounded-lg p-4 md:hidden">
-            <div className="flex flex-col space-y-4">
-              <a href="#home" className="text-foreground transition-colors hover:text-mars">
-                Início
-              </a>
-              <a href="#about" className="text-foreground transition-colors hover:text-mars">
-                Sobre
-              </a>
-              <a href="#gallery" className="text-foreground transition-colors hover:text-mars">
-                Explore Marte
-              </a>
+          <div className="absolute right-4 top-16 md:hidden">
+            <div className="glass-effect mt-2 animate-fade-in rounded-lg p-4">
+              <div className="flex flex-col space-y-4">
+                <a href="#home" className="text-foreground transition-colors hover:text-mars">
+                  Início
+                </a>
+                <a href="#about" className="text-foreground transition-colors hover:text-mars">
+                  Sobre
+                </a>
+                <a href="#gallery" className="text-foreground transition-colors hover:text-mars">
+                  Explore Marte
+                </a>
+              </div>
             </div>
           </div>
         )}
