@@ -74,7 +74,6 @@ export function Gallery() {
       const fetchedPhotos = data.photos || [];
       setPhotos(fetchedPhotos);
       
-      // A API da NASA não retorna o total de páginas, então vamos estimar
       const estimatedTotalPages = fetchedPhotos.length > 0 ? currentPage + 1 : currentPage;
       setTotalPages(estimatedTotalPages);
 
@@ -112,7 +111,6 @@ export function Gallery() {
     fetchPhotos();
   };
 
-  // Lógica para gerar os itens de paginação
   const getPaginationItems = () => {
     const items = [];
     const maxPagesToShow = 3;
@@ -246,7 +244,7 @@ export function Gallery() {
         ) : (
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
-              {filteredPhotos.map((photo, index) => (
+              {filteredPhotos.slice(0, 24).map((photo, index) => (
                 <Card 
                   key={photo.id} 
                   className="hover-glow cursor-pointer group glass-effect border-border/50"
@@ -297,7 +295,7 @@ export function Gallery() {
                     <PaginationItem>
                       <PaginationNext
                         onClick={() => setCurrentPage(prev => prev + 1)}
-                        disabled={photos.length < 25}
+                        disabled={photos.length < 24}
                       />
                     </PaginationItem>
                   </PaginationContent>
