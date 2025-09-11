@@ -1,4 +1,4 @@
-import { Rocket } from "lucide-react";
+import { Rocket, Linkedin, Instagram, X, Globe } from "lucide-react";
 
 export function Footer() {
   return (
@@ -61,39 +61,43 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="font-semibold text-foreground mb-4">Sites da NASA</h3>
-            <div className="space-y-2 text-sm">
+            <h3 className="font-semibold text-foreground mb-4">Redes Sociais</h3>
+            <div className="flex items-center gap-4">
               <a 
                 href="https://www.nasa.gov/" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-mars transition-colors block"
+                className="text-muted-foreground hover:text-mars transition-colors"
+                title="Site oficial da NASA"
               >
-                Site oficial da NASA
+                <Globe className="h-6 w-6" />
               </a>
               <a 
                 href="https://www.linkedin.com/company/nasa/" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-mars transition-colors block"
+                className="text-muted-foreground hover:text-mars transition-colors"
+                title="LinkedIn da NASA"
               >
-                LinkedIn da NASA
+                <Linkedin className="h-6 w-6" />
               </a>
               <a 
                 href="https://www.instagram.com/nasa/" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-mars transition-colors block"
+                className="text-muted-foreground hover:text-mars transition-colors"
+                title="Instagram da NASA"
               >
-                Instagram da NASA
+                <Instagram className="h-6 w-6" />
               </a>
               <a 
                 href="https://twitter.com/nasa/" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-mars transition-colors block"
+                className="text-muted-foreground hover:text-mars transition-colors"
+                title="X da NASA"
               >
-                Twitter da NASA
+                <X className="h-6 w-6" />
               </a>
             </div>
           </div>

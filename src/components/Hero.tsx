@@ -3,29 +3,29 @@ import marsPlanet from "@/assets/mars-planet.jpg";
 
 export function Hero() {
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden">
+    <section id="home" className="min-h-[120vh] sm:min-h-screen flex items-center justify-center relative overflow-hidden pt-24 pb-12 sm:pb-0">
       <div className="absolute inset-0 nebula-bg" />
       
       <div className="container mx-auto px-4 grid lg:grid-cols-2 gap-12 items-center relative z-10">
         <div className="text-center lg:text-left space-y-8 fade-in">
           <div className="space-y-4">
-            <h1 className="text-5xl md:text-7xl font-bold text-mars-glow leading-tight">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-mars-glow leading-tight">
               Explore
-              <span className="block text-accent">Marte</span>
+              <span className="lg:block text-accent">Marte</span>
             </h1>
-            <p className="text-xl text-muted-foreground max-w-2xl">
+            <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl">
               Descubra as maravilhas do planeta vermelho através das lentes dos rovers da NASA. 
               Visualize e explore milhares de fotografias capturadas diretamente da superfície marciana.
             </p>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-            <Button variant="mars" size="xl" onClick={() => {
+            <Button variant="mars" size="lg" onClick={() => {
               document.getElementById('gallery')?.scrollIntoView({ behavior: 'smooth' });
             }}>
               Explorar Marte
             </Button>
-            <Button variant="mars-outline" size="xl" onClick={() => {
+            <Button variant="mars-outline" size="lg" onClick={() => {
               document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
             }}>
               Saiba Mais
@@ -48,8 +48,8 @@ export function Hero() {
           </div>
         </div>
 
-        <div className="relative flex items-center justify-center fade-in-delay">
-          <div className="relative w-96 h-96 lg:w-[500px] lg:h-[500px]">
+        <div className="relative flex items-center justify-center fade-in-delay mt-12 lg:mt-0">
+          <div className="relative w-72 h-72 sm:w-96 sm:h-96 lg:w-[500px] lg:h-[500px]">
             <img 
               src={marsPlanet} 
               alt="Planeta Marte" 
@@ -59,12 +59,12 @@ export function Hero() {
             <div className="absolute inset-4 rounded-full border border-accent/20 animate-spin" style={{ animationDuration: '45s', animationDirection: 'reverse' }} />
           </div>
           
-          <div className="absolute top-10 -left-10 glass-effect p-3 rounded-lg animate-bounce" style={{ animationDuration: '3s' }}>
+          <div className="absolute top-10 left-2 glass-effect p-3 rounded-lg animate-bounce" style={{ animationDuration: '3s' }}>
             <div className="text-sm font-medium text-mars">Curiosity</div>
             <div className="text-xs text-muted-foreground">Ativo desde 2012</div>
           </div>
           
-          <div className="absolute bottom-20 -right-10 glass-effect p-3 rounded-lg animate-bounce" style={{ animationDuration: '3s', animationDelay: '1s' }}>
+          <div className="absolute bottom-20 right-2 glass-effect p-3 rounded-lg animate-bounce" style={{ animationDuration: '3s', animationDelay: '1s' }}>
             <div className="text-sm font-medium text-mars">Perseverance</div>
             <div className="text-xs text-muted-foreground">Ativo desde 2021</div>
           </div>

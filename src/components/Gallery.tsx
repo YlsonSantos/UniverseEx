@@ -1,11 +1,15 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import { Search, Camera, Satellite, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
+import { Search, Camera, Satellite, ChevronLeft, ChevronRight, ZoomIn, CalendarIcon, Eraser } from "lucide-react";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
 
 interface MarsPhoto {
   id: number;
@@ -31,7 +35,7 @@ export function Gallery() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedRover, setSelectedRover] = useState("");
   const [selectedCamera, setSelectedCamera] = useState("");
-  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
 
   const rovers = ["curiosity", "opportunity", "spirit", "perseverance"];
   const cameras = ["FHAZ", "RHAZ", "MAST", "CHEMCAM", "MAHLI", "MARDI", "NAVCAM"];
@@ -53,7 +57,7 @@ export function Gallery() {
       });
 
       if (selectedDate) {
-        params.append('earth_date', selectedDate);
+        params.append('earth_date', format(selectedDate, 'yyyy-MM-dd'));
       } else {
         params.append('sol', '1000'); 
       }
@@ -91,6 +95,15 @@ export function Gallery() {
     fetchPhotos();
   };
 
+  const handleClearFilters = () => {
+    setSearchTerm("");
+    setSelectedRover("");
+    setSelectedCamera("");
+    setSelectedDate(undefined);
+    setCurrentPage(1);
+    fetchPhotos();
+  };
+
   return (
     <section id="gallery" className="py-20 relative">
       <div className="container mx-auto px-4">
@@ -105,7 +118,7 @@ export function Gallery() {
 
         <div className="glass-effect rounded-xl p-6 mb-8 fade-in-delay">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3">
-            <div className="lg:col-span-2">
+            <div className="lg:col-span-1">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
@@ -147,25 +160,49 @@ export function Gallery() {
               </SelectContent>
             </Select>
 
-            <div className="flex gap-2">
-              <Input
-                type="date"
-                value={selectedDate}
-                onChange={(e) => setSelectedDate(e.target.value)}
-                className="bg-background/50"
-              />
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant={"outline"}
+                  className={cn(
+                    "w-full justify-center text-left font-normal bg-background/50 px-3",
+                    !selectedDate && "text-muted-foreground",
+                  )}
+                >
+                  <span className="flex-grow text-center">{selectedDate ? format(selectedDate, "dd/MM/yyyy") : "dd/mm/aaaa"}</span>
+                  <CalendarIcon className="ml-auto h-4 w-4" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0">
+                <Calendar
+                  mode="single"
+                  selected={selectedDate}
+                  onSelect={setSelectedDate}
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
+
+            <div className="flex gap-2 w-full">
+              <Button 
+                variant="default" 
+                size="sm"
+                className="w-full sm:w-auto"
+                onClick={handleSearch}
+                disabled={loading}
+              >
+                {loading ? "Carregando..." : "Buscar Fotos"}
+              </Button>
+              <Button 
+                variant="outline" 
+                size="sm"
+                className="w-full sm:w-auto p-2"
+                onClick={handleClearFilters}
+              >
+                <Eraser className="h-4 w-4" />
+              </Button>
             </div>
           </div>
-
-          <Button 
-            variant="mars" 
-            size="sm"
-            className="w-full sm:w-auto mt-4"
-            onClick={handleSearch}
-            disabled={loading}
-          >
-            {loading ? "Carregando..." : "Buscar Fotos"}
-          </Button>
         </div>
 
         {loading ? (
@@ -258,9 +295,9 @@ export function Gallery() {
       </div>
 
       <Dialog open={modalOpen} onOpenChange={setModalOpen}>
-        <DialogContent className="max-w-4xl glass-effect border-border/50">
-          <DialogHeader>
-            <DialogTitle className="text-mars">
+        <DialogContent className="max-w-[calc(100vw-2rem)] sm:max-w-md md:max-w-xl lg:max-w-4xl glass-effect border-border/50 p-4 pt-6 rounded-xl">
+          <DialogHeader className="pr-8">
+            <DialogTitle className="text-mars text-lg md:text-xl break-words">
               {selectedPhoto?.rover.name} - {selectedPhoto?.camera.full_name}
             </DialogTitle>
           </DialogHeader>
