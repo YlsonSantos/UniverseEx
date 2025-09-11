@@ -1,7 +1,8 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { Search, Camera, Satellite, ChevronLeft, ChevronRight, ZoomIn, CalendarIcon, Eraser } from "lucide-react";
-import { format, parseISO } from "date-fns";
+import { format, parseISO, isValid, parse } from "date-fns";
+import { ptBR } from "date-fns/locale";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -36,6 +37,8 @@ export function Gallery() {
   const [selectedRover, setSelectedRover] = useState("");
   const [selectedCamera, setSelectedCamera] = useState("");
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
+  const [dateInput, setDateInput] = useState("");
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
   const rovers = ["curiosity", "opportunity", "spirit", "perseverance"];
   const cameras = ["FHAZ", "RHAZ", "MAST", "CHEMCAM", "MAHLI", "MARDI", "NAVCAM"];
@@ -45,6 +48,14 @@ export function Gallery() {
   useEffect(() => {
     fetchPhotos();
   }, [currentPage, selectedRover, selectedCamera, selectedDate]);
+
+  useEffect(() => {
+    if (selectedDate) {
+      setDateInput(format(selectedDate, "dd/MM/yyyy", { locale: ptBR }));
+    } else {
+      setDateInput("");
+    }
+  }, [selectedDate]);
 
   const fetchPhotos = async () => {
     setLoading(true);
@@ -81,6 +92,30 @@ export function Gallery() {
     }
   };
 
+  const handleDateInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value.replace(/[^\d]/g, "");
+    
+    if (value.length > 2) {
+      value = value.substring(0, 2) + "/" + value.substring(2);
+    }
+    if (value.length > 5) {
+      value = value.substring(0, 5) + "/" + value.substring(5, 9);
+    }
+
+    setDateInput(value);
+    
+    if (value.length === 10) {
+      const parsedDate = parse(value, 'dd/MM/yyyy', new Date());
+      if (isValid(parsedDate)) {
+        setSelectedDate(parsedDate);
+      } else {
+        setSelectedDate(undefined);
+      }
+    } else {
+      setSelectedDate(undefined);
+    }
+  };
+
   const filteredPhotos = photos.filter(photo =>
     photo.rover.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     photo.camera.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -102,6 +137,7 @@ export function Gallery() {
     setSelectedRover("");
     setSelectedCamera("");
     setSelectedDate(undefined);
+    setDateInput("");
     setCurrentPage(1);
     fetchPhotos();
   };
@@ -162,26 +198,33 @@ export function Gallery() {
               </SelectContent>
             </Select>
 
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant={"outline"}
-                  className={cn(
-                    "w-full justify-center text-left font-normal bg-background/50 px-3 hover:bg-transparent",
-                    !selectedDate && "text-muted-foreground",
-                    "focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:text-foreground",
-                    selectedDate ? "text-foreground" : "text-muted-foreground"
-                  )}
-                >
-                  <span className="flex-grow text-center">{selectedDate ? format(selectedDate, "dd/MM/yyyy") : "dd/mm/aaaa"}</span>
-                  <CalendarIcon className="ml-auto h-4 w-4" />
-                </Button>
-              </PopoverTrigger>
+            <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
+              <div className="relative w-full">
+                <Input
+                  placeholder="dd/mm/aaaa"
+                  className="w-full bg-background/50 pr-10"
+                  value={dateInput}
+                  onChange={handleDateInputChange}
+                  maxLength={10}
+                />
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="absolute right-0 top-0 h-10 w-10 text-muted-foreground hover:bg-transparent hover:text-foreground"
+                  >
+                    <CalendarIcon className="h-4 w-4" />
+                  </Button>
+                </PopoverTrigger>
+              </div>
               <PopoverContent className="w-auto p-0" side="bottom" sideOffset={5} align="start">
                 <Calendar
                   mode="single"
                   selected={selectedDate}
-                  onSelect={setSelectedDate}
+                  onSelect={(date) => {
+                    setSelectedDate(date);
+                    setIsCalendarOpen(false);
+                  }}
                   initialFocus
                 />
               </PopoverContent>
