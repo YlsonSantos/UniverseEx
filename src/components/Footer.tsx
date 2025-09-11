@@ -1,4 +1,4 @@
-import { Rocket, Github, Twitter, Mail } from "lucide-react";
+import { Rocket } from "lucide-react";
 
 export function Footer() {
   return (

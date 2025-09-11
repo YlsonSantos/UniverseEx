@@ -15,26 +15,26 @@ export function Header() {
   }, []);
 
   return (
-    <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-      isScrolled ? "glass-effect shadow-shadow-deep" : "bg-transparent"
-    }`}>
+    <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? "glass-effect shadow-shadow-deep" : "bg-transparent"}`}>
       <div className="container mx-auto px-4">
-        <nav className="flex items-center justify-between h-16">
+        <nav className="flex h-16 items-center justify-between">
           <div className="flex items-center space-x-2">
             <Rocket className="h-8 w-8 text-mars" />
             <span className="text-xl font-bold text-mars-glow">UniverseEx</span>
           </div>
 
-          <div className="hidden md:flex items-center space-x-8">
-            <a href="#home" className="text-foreground hover:text-mars transition-colors">
+          <div className="hidden items-center space-x-8 md:flex">
+            <a href="#home" className="text-foreground transition-colors hover:text-mars">
               Início
             </a>
-            <a href="#about" className="text-foreground hover:text-mars transition-colors">
+            <a href="#about" className="text-foreground transition-colors hover:text-mars">
               Sobre
             </a>
-            <a href="#gallery" className="text-foreground hover:text-mars transition-colors">
-              Explore Marte
-            </a>
+            <Button asChild className="rounded-lg bg-gradient-to-r from-orange-600 to-red-600 text-white transition-colors hover:from-orange-700 hover:to-red-700">
+              <a href="#gallery">
+                Explore Marte
+              </a>
+            </Button>
           </div>
 
           <Button
@@ -48,15 +48,15 @@ export function Header() {
         </nav>
 
         {isMenuOpen && (
-          <div className="md:hidden glass-effect rounded-lg mt-2 p-4 animate-fade-in">
+          <div className="glass-effect mt-2 animate-fade-in rounded-lg p-4 md:hidden">
             <div className="flex flex-col space-y-4">
-              <a href="#home" className="text-foreground hover:text-mars transition-colors">
+              <a href="#home" className="text-foreground transition-colors hover:text-mars">
                 Início
               </a>
-              <a href="#about" className="text-foreground hover:text-mars transition-colors">
+              <a href="#about" className="text-foreground transition-colors hover:text-mars">
                 Sobre
               </a>
-              <a href="#gallery" className="text-foreground hover:text-mars transition-colors">
+              <a href="#gallery" className="text-foreground transition-colors hover:text-mars">
                 Explore Marte
               </a>
             </div>

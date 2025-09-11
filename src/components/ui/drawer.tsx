@@ -63,7 +63,7 @@ const DrawerTitle = React.forwardRef<
     {...props}
   />
 ));
-DrawerTitle.displayName = "DrawerTitle";
+DrawerTitle.displayName = DrawerPrimitive.Title.displayName;
 
 const DrawerDescription = React.forwardRef<
   React.ElementRef<typeof DrawerPrimitive.Description>,
@@ -71,7 +71,7 @@ const DrawerDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DrawerPrimitive.Description ref={ref} className={cn("text-sm text-muted-foreground", className)} {...props} />
 ));
-DrawerDescription.displayName = "DrawerDescription";
+DrawerDescription.displayName = DrawerPrimitive.Description.displayName;
 
 export {
   Drawer,

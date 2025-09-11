@@ -77,7 +77,7 @@ const BreadcrumbEllipsis = ({ className, ...props }: React.ComponentProps<"span"
     <span className="sr-only">Mais</span>
   </span>
 );
-BreadcrumbEllipsis.displayName = "BreadcrumbElipssis";
+BreadcrumbEllipsis.displayName = "BreadcrumbEllipsis";
 
 export {
   Breadcrumb,

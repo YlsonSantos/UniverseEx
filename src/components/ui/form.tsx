@@ -38,7 +38,7 @@ const useFormField = () => {
   const fieldState = getFieldState(fieldContext.name, formState);
 
   if (!fieldContext) {
-    throw new Error("useFormField deve ser usado dentro de <FormField>");
+    throw new Error("useFormField deve ser usado dentro de um <FormField>");
   }
 
   const { id } = itemContext;
