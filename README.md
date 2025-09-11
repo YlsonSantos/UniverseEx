@@ -46,7 +46,7 @@ Siga os passos abaixo para configurar e rodar o projeto em sua máquina local.
 
 1.  **Clone o repositório:**
     ```bash
-    git clone [https://github.com/YlsonSantos/UniverseEx.git](https://github.com/YlsonSantos/UniverseEx.git)
+    git clone https://github.com/YlsonSantos/UniverseEx.git
     cd UniverseEx
     ```
 
