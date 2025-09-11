@@ -47,7 +47,6 @@ const CommandInput = React.forwardRef<
         "flex h-11 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50",
         className,
       )}
-      placeholder="Pesquisar..."
       {...props}
     />
   </div>
@@ -71,11 +70,7 @@ CommandList.displayName = CommandPrimitive.List.displayName;
 const CommandEmpty = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Empty>,
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Empty>
->((props, ref) => (
-  <CommandPrimitive.Empty ref={ref} className="py-6 text-center text-sm" {...props}>
-    Nenhum resultado encontrado.
-  </CommandPrimitive.Empty>
-));
+>((props, ref) => <CommandPrimitive.Empty ref={ref} className="py-6 text-center text-sm" {...props} />);
 
 CommandEmpty.displayName = CommandPrimitive.Empty.displayName;
 
@@ -106,7 +101,7 @@ CommandSeparator.displayName = CommandPrimitive.Separator.displayName;
 const CommandItem = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Item>,
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Item>
->(({ className, children, ...props }, ref) => (
+>(({ className, ...props }, ref) => (
   <CommandPrimitive.Item
     ref={ref}
     className={cn(
@@ -114,9 +109,7 @@ const CommandItem = React.forwardRef<
       className,
     )}
     {...props}
-  >
-    {children}
-  </CommandPrimitive.Item>
+  />
 ));
 
 CommandItem.displayName = CommandPrimitive.Item.displayName;

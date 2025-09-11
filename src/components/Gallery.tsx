@@ -1,4 +1,5 @@
-import { useState, useEffect, useCallback } from "react";
+import * as React from "react";
+import { useState, useEffect } from "react";
 import { Search, Camera, Satellite, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -37,11 +38,14 @@ export function Gallery() {
 
   const API_KEY = "cAgK93cEaMd6ccayF9UhQLFmyKeWc7dCvuKX4o9G";
 
-  const fetchPhotos = useCallback(async () => {
+  useEffect(() => {
+    fetchPhotos();
+  }, [currentPage, selectedRover, selectedCamera, selectedDate]);
+
+  const fetchPhotos = async () => {
     setLoading(true);
     try {
-      const roverToFetch = selectedRover && selectedRover !== 'all' ? selectedRover : 'curiosity';
-      const url = `https://api.nasa.gov/mars-photos/api/v1/rovers/${roverToFetch}/photos?`;
+      let url = `https://api.nasa.gov/mars-photos/api/v1/rovers/${selectedRover && selectedRover !== 'all' ? selectedRover : 'curiosity'}/photos?`;
       
       const params = new URLSearchParams({
         api_key: API_KEY,
@@ -69,11 +73,7 @@ export function Gallery() {
     } finally {
       setLoading(false);
     }
-  }, [currentPage, selectedRover, selectedCamera, selectedDate]);
-
-  useEffect(() => {
-    fetchPhotos();
-  }, [fetchPhotos]);
+  };
 
   const filteredPhotos = photos.filter(photo =>
     photo.rover.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -269,7 +269,7 @@ export function Gallery() {
               <img 
                 src={selectedPhoto.img_src} 
                 alt={`${selectedPhoto.rover.name} - ${selectedPhoto.camera.full_name}`}
-                className="w-full max-h-[70vh] object-contain rounded-lg"
+                className="w-full max-h-96 object-contain rounded-lg"
               />
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                 <div>
@@ -292,4 +292,3 @@ export function Gallery() {
     </section>
   );
 }
-
