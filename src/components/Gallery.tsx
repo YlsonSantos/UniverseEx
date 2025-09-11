@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { Search, Camera, Satellite, ChevronLeft, ChevronRight, ZoomIn, CalendarIcon, Eraser } from "lucide-react";
-import { format } from "date-fns";
+import { format, parseISO } from "date-fns";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,6 +10,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 
 interface MarsPhoto {
   id: number;
@@ -28,7 +29,7 @@ export function Gallery() {
   const [photos, setPhotos] = useState<MarsPhoto[]>([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPhotos, setTotalPhotos] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
   const [selectedPhoto, setSelectedPhoto] = useState<MarsPhoto | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -49,7 +50,8 @@ export function Gallery() {
   const fetchPhotos = async () => {
     setLoading(true);
     try {
-      let url = `https://api.nasa.gov/mars-photos/api/v1/rovers/${selectedRover && selectedRover !== 'all' ? selectedRover : 'curiosity'}/photos?`;
+      const roverName = selectedRover && selectedRover !== 'all' ? selectedRover : 'curiosity';
+      let url = `https://api.nasa.gov/mars-photos/api/v1/rovers/${roverName}/photos?`;
       
       const params = new URLSearchParams({
         api_key: API_KEY,
@@ -69,11 +71,17 @@ export function Gallery() {
       const response = await fetch(url + params.toString());
       const data = await response.json();
       
-      setPhotos(data.photos || []);
-      setTotalPhotos(data.photos?.length || 0);
+      const fetchedPhotos = data.photos || [];
+      setPhotos(fetchedPhotos);
+      
+      // A API da NASA não retorna o total de páginas, então vamos estimar
+      const estimatedTotalPages = fetchedPhotos.length > 0 ? currentPage + 1 : currentPage;
+      setTotalPages(estimatedTotalPages);
+
     } catch (error) {
       console.error('Error fetching photos:', error);
       setPhotos([]);
+      setTotalPages(0);
     } finally {
       setLoading(false);
     }
@@ -104,6 +112,30 @@ export function Gallery() {
     fetchPhotos();
   };
 
+  // Lógica para gerar os itens de paginação
+  const getPaginationItems = () => {
+    const items = [];
+    const maxPagesToShow = 3;
+    const startPage = Math.max(1, currentPage - 1);
+    const endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
+
+    for (let i = startPage; i <= endPage; i++) {
+      items.push(
+        <PaginationItem key={i}>
+          <PaginationLink 
+            isActive={currentPage === i}
+            onClick={() => setCurrentPage(i)}
+            variant="mars-outline"
+          >
+            {i}
+          </PaginationLink>
+        </PaginationItem>
+      );
+    }
+    return items;
+  };
+
+
   return (
     <section id="gallery" className="py-20 relative">
       <div className="container mx-auto px-4">
@@ -117,8 +149,8 @@ export function Gallery() {
         </div>
 
         <div className="glass-effect rounded-xl p-6 mb-8 fade-in-delay">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3">
-            <div className="lg:col-span-1">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-3 justify-items-center">
+            <div className="lg:col-span-2 w-full">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
@@ -165,7 +197,7 @@ export function Gallery() {
                 <Button
                   variant={"outline"}
                   className={cn(
-                    "w-full justify-center text-left font-normal bg-background/50 px-3",
+                    "w-full justify-center text-left font-normal bg-background/50 px-3 hover:bg-transparent",
                     !selectedDate && "text-muted-foreground",
                   )}
                 >
@@ -183,7 +215,7 @@ export function Gallery() {
               </PopoverContent>
             </Popover>
 
-            <div className="flex gap-2 w-full">
+            <div className="flex gap-2 w-full justify-center lg:justify-end">
               <Button 
                 variant="default" 
                 size="sm"
@@ -196,7 +228,7 @@ export function Gallery() {
               <Button 
                 variant="outline" 
                 size="sm"
-                className="w-full sm:w-auto p-2"
+                className="w-full sm:w-auto p-2 hover:bg-transparent hover:text-current"
                 onClick={handleClearFilters}
               >
                 <Eraser className="h-4 w-4" />
@@ -239,7 +271,7 @@ export function Gallery() {
                           {photo.rover.name}
                         </span>
                         <span className="text-xs text-muted-foreground">
-                          {photo.earth_date}
+                          {format(parseISO(photo.earth_date), 'dd/MM/yyyy')}
                         </span>
                       </div>
                       <div className="text-sm text-muted-foreground">
@@ -253,29 +285,23 @@ export function Gallery() {
 
             {filteredPhotos.length > 0 && (
               <div className="flex justify-center items-center space-x-4">
-                <Button
-                  variant="mars-outline"
-                  size="sm"
-                  onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
-                  disabled={currentPage === 1}
-                >
-                  <ChevronLeft className="h-4 w-4 mr-1" />
-                  Anterior
-                </Button>
-                
-                <span className="text-sm text-muted-foreground">
-                  Página {currentPage}
-                </span>
-                
-                <Button
-                  variant="mars-outline"
-                  size="sm"
-                  onClick={() => setCurrentPage(prev => prev + 1)}
-                  disabled={filteredPhotos.length < 25}
-                >
-                  Próxima
-                  <ChevronRight className="h-4 w-4 ml-1" />
-                </Button>
+                <Pagination>
+                  <PaginationContent>
+                    <PaginationItem>
+                      <PaginationPrevious 
+                        onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                        disabled={currentPage === 1}
+                      />
+                    </PaginationItem>
+                    {getPaginationItems()}
+                    <PaginationItem>
+                      <PaginationNext
+                        onClick={() => setCurrentPage(prev => prev + 1)}
+                        disabled={photos.length < 25}
+                      />
+                    </PaginationItem>
+                  </PaginationContent>
+                </Pagination>
               </div>
             )}
           </>
@@ -311,7 +337,9 @@ export function Gallery() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                 <div>
                   <span className="font-medium text-mars">Data na Terra:</span>
-                  <div className="text-muted-foreground">{selectedPhoto.earth_date}</div>
+                  <div className="text-muted-foreground">
+                    {format(parseISO(selectedPhoto.earth_date), 'dd/MM/yyyy')}
+                  </div>
                 </div>
                 <div>
                   <span className="font-medium text-mars">Câmera:</span>
