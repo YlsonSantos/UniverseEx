@@ -1,4 +1,5 @@
-import { Rocket, Linkedin, Instagram, X, Globe } from "lucide-react";
+import { Linkedin, Instagram, X, Globe } from "lucide-react";
+import marsGlobeIcon from "@/assets/mars-globe.png";
 
 export function Footer() {
   return (
@@ -7,7 +8,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
-              <Rocket className="h-8 w-8 text-mars" />
+              <img src={marsGlobeIcon} alt="Ícone do Planeta Marte" className="h-8 w-8 text-mars" />
               <span className="text-xl font-bold text-mars-glow">UniverseEx</span>
             </div>
             <p className="text-sm text-muted-foreground">
@@ -105,7 +106,7 @@ export function Footer() {
 
         <div className="border-t border-border/30 mt-8 pt-8 text-center">
           <p className="text-sm text-muted-foreground">
-            © 2024 UniverseEx. Dados fornecidos pela NASA. 
+            © 2025 UniverseEx. Dados fornecidos pela NASA. 
             <span className="text-mars"> Explore o universo responsavelmente.</span>
           </p>
         </div>

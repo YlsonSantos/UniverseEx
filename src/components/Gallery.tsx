@@ -29,7 +29,6 @@ export function Gallery() {
   const [photos, setPhotos] = useState<MarsPhoto[]>([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
   const [selectedPhoto, setSelectedPhoto] = useState<MarsPhoto | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -74,13 +73,9 @@ export function Gallery() {
       const fetchedPhotos = data.photos || [];
       setPhotos(fetchedPhotos);
       
-      const estimatedTotalPages = fetchedPhotos.length > 0 ? currentPage + 1 : currentPage;
-      setTotalPages(estimatedTotalPages);
-
     } catch (error) {
       console.error('Error fetching photos:', error);
       setPhotos([]);
-      setTotalPages(0);
     } finally {
       setLoading(false);
     }
@@ -110,29 +105,6 @@ export function Gallery() {
     setCurrentPage(1);
     fetchPhotos();
   };
-
-  const getPaginationItems = () => {
-    const items = [];
-    const maxPagesToShow = 3;
-    const startPage = Math.max(1, currentPage - 1);
-    const endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
-
-    for (let i = startPage; i <= endPage; i++) {
-      items.push(
-        <PaginationItem key={i}>
-          <PaginationLink 
-            isActive={currentPage === i}
-            onClick={() => setCurrentPage(i)}
-            variant="mars-outline"
-          >
-            {i}
-          </PaginationLink>
-        </PaginationItem>
-      );
-    }
-    return items;
-  };
-
 
   return (
     <section id="gallery" className="py-20 relative">
@@ -197,13 +169,15 @@ export function Gallery() {
                   className={cn(
                     "w-full justify-center text-left font-normal bg-background/50 px-3 hover:bg-transparent",
                     !selectedDate && "text-muted-foreground",
+                    "focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:text-foreground",
+                    selectedDate ? "text-foreground" : "text-muted-foreground"
                   )}
                 >
                   <span className="flex-grow text-center">{selectedDate ? format(selectedDate, "dd/MM/yyyy") : "dd/mm/aaaa"}</span>
                   <CalendarIcon className="ml-auto h-4 w-4" />
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-auto p-0">
+              <PopoverContent className="w-auto p-0" side="bottom" sideOffset={5} align="start">
                 <Calendar
                   mode="single"
                   selected={selectedDate}
@@ -213,7 +187,7 @@ export function Gallery() {
               </PopoverContent>
             </Popover>
 
-            <div className="flex gap-2 w-full justify-center lg:justify-end">
+            <div className="flex gap-2 w-full justify-center lg:justify-end md:col-span-2 lg:col-span-1">
               <Button 
                 variant="default" 
                 size="sm"
@@ -281,27 +255,28 @@ export function Gallery() {
               ))}
             </div>
 
-            {filteredPhotos.length > 0 && (
-              <div className="flex justify-center items-center space-x-4">
-                <Pagination>
-                  <PaginationContent>
-                    <PaginationItem>
-                      <PaginationPrevious 
-                        onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
-                        disabled={currentPage === 1}
-                      />
-                    </PaginationItem>
-                    {getPaginationItems()}
-                    <PaginationItem>
-                      <PaginationNext
-                        onClick={() => setCurrentPage(prev => prev + 1)}
-                        disabled={photos.length < 24}
-                      />
-                    </PaginationItem>
-                  </PaginationContent>
-                </Pagination>
-              </div>
-            )}
+            {
+              (photos.length >= 24 || currentPage > 1) && (
+                <div className="flex justify-center items-center space-x-4">
+                  <Pagination>
+                    <PaginationContent>
+                      <PaginationItem>
+                        <PaginationPrevious 
+                          onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                          disabled={currentPage === 1}
+                        />
+                      </PaginationItem>
+                      <PaginationItem>
+                        <PaginationNext
+                          onClick={() => setCurrentPage(prev => prev + 1)}
+                          disabled={photos.length < 24}
+                        />
+                      </PaginationItem>
+                    </PaginationContent>
+                  </Pagination>
+                </div>
+              )
+            }
           </>
         )}
 

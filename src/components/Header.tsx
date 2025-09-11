@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { Menu, X, Rocket } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import marsGlobeIcon from "@/assets/mars-globe.png";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -19,7 +20,7 @@ export function Header() {
       <div className="container mx-auto px-4">
         <nav className="flex h-16 items-center justify-between">
           <div className="flex items-center space-x-2">
-            <Rocket className="h-8 w-8 text-mars" />
+            <img src={marsGlobeIcon} alt="Ícone do Planeta Marte" className="h-8 w-8" />
             <span className="text-xl font-bold text-mars-glow">UniverseEx</span>
           </div>
 

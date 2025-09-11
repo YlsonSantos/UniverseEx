@@ -3,10 +3,10 @@ import marsPlanet from "@/assets/mars-planet.jpg";
 
 export function Hero() {
   return (
-    <section id="home" className="min-h-[120vh] sm:min-h-screen flex items-center justify-center relative overflow-hidden pt-24 pb-12 sm:pb-0">
+    <section id="home" className="min-h-[100vh] sm:min-h-[110vh] flex items-center justify-center relative overflow-hidden pt-22 pb-12 sm:pb-0">
       <div className="absolute inset-0 nebula-bg" />
       
-      <div className="container mx-auto px-4 grid lg:grid-cols-2 gap-12 items-center relative z-10">
+      <div className="container mx-auto px-4 grid lg:grid-cols-2 gap-12 items-center relative z-10 ">
         <div className="text-center lg:text-left space-y-8 fade-in">
           <div className="space-y-4">
             <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-mars-glow leading-tight">
