@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import { Search, Camera, Satellite, ChevronLeft, ChevronRight, ZoomIn, CalendarIcon, Eraser } from "lucide-react";
-import { format, parseISO, isValid, parse } from "date-fns";
+import { Search, Camera, Satellite, ZoomIn, CalendarIcon, Eraser } from "lucide-react";
+import { format, parseISO, isValid, parse, endOfDay } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -11,7 +11,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
-import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
+import { Pagination, PaginationContent, PaginationItem, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 
 interface MarsPhoto {
   id: number;
@@ -62,7 +62,7 @@ export function Gallery() {
     try {
       const roverName = selectedRover && selectedRover !== 'all' ? selectedRover : 'curiosity';
       let url = `https://api.nasa.gov/mars-photos/api/v1/rovers/${roverName}/photos?`;
-      
+
       const params = new URLSearchParams({
         api_key: API_KEY,
         page: currentPage.toString(),
@@ -71,7 +71,7 @@ export function Gallery() {
       if (selectedDate) {
         params.append('earth_date', format(selectedDate, 'yyyy-MM-dd'));
       } else {
-        params.append('sol', '1000'); 
+        params.append('sol', '1000');
       }
 
       if (selectedCamera && selectedCamera !== 'all') {
@@ -80,10 +80,10 @@ export function Gallery() {
 
       const response = await fetch(url + params.toString());
       const data = await response.json();
-      
+
       const fetchedPhotos = data.photos || [];
       setPhotos(fetchedPhotos);
-      
+
     } catch (error) {
       console.error('Error fetching photos:', error);
       setPhotos([]);
@@ -94,22 +94,20 @@ export function Gallery() {
 
   const handleDateInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value.replace(/[^\d]/g, "");
-    
-    if (value.length > 2) {
-      value = value.substring(0, 2) + "/" + value.substring(2);
-    }
-    if (value.length > 5) {
-      value = value.substring(0, 5) + "/" + value.substring(5, 9);
-    }
+
+    if (value.length > 2) value = value.substring(0, 2) + "/" + value.substring(2);
+    if (value.length > 5) value = value.substring(0, 5) + "/" + value.substring(5, 9);
 
     setDateInput(value);
-    
+
     if (value.length === 10) {
       const parsedDate = parse(value, 'dd/MM/yyyy', new Date());
-      if (isValid(parsedDate)) {
+      const hoje = endOfDay(new Date());
+
+      if (isValid(parsedDate) && parsedDate <= hoje) {
         setSelectedDate(parsedDate);
       } else {
-        setSelectedDate(undefined);
+        setSelectedDate(undefined); 
       }
     } else {
       setSelectedDate(undefined);
@@ -225,6 +223,8 @@ export function Gallery() {
                     setSelectedDate(date);
                     setIsCalendarOpen(false);
                   }}
+                  toDate={endOfDay(new Date())} 
+                  disabled={{ after: new Date() }} 
                   initialFocus
                 />
               </PopoverContent>
@@ -298,28 +298,26 @@ export function Gallery() {
               ))}
             </div>
 
-            {
-              (photos.length >= 24 || currentPage > 1) && (
-                <div className="flex justify-center items-center space-x-4">
-                  <Pagination>
-                    <PaginationContent>
-                      <PaginationItem>
-                        <PaginationPrevious 
-                          onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
-                          disabled={currentPage === 1}
-                        />
-                      </PaginationItem>
-                      <PaginationItem>
-                        <PaginationNext
-                          onClick={() => setCurrentPage(prev => prev + 1)}
-                          disabled={photos.length < 24}
-                        />
-                      </PaginationItem>
-                    </PaginationContent>
-                  </Pagination>
-                </div>
-              )
-            }
+            {(photos.length >= 24 || currentPage > 1) && (
+              <div className="flex justify-center items-center space-x-4">
+                <Pagination>
+                  <PaginationContent>
+                    <PaginationItem>
+                      <PaginationPrevious 
+                        onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                        disabled={currentPage === 1}
+                      />
+                    </PaginationItem>
+                    <PaginationItem>
+                      <PaginationNext
+                        onClick={() => setCurrentPage(prev => prev + 1)}
+                        disabled={photos.length < 24}
+                      />
+                    </PaginationItem>
+                  </PaginationContent>
+                </Pagination>
+              </div>
+            )}
           </>
         )}
 

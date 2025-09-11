@@ -55,7 +55,6 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
       captionLayout="dropdown-buttons"
       fromYear={2012}
       toYear={new Date().getFullYear()}
-      toDate={endOfDay(new Date())}
       {...props}
     />
   );
