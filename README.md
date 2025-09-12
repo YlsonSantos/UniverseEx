@@ -78,15 +78,11 @@ npm run dev
 
 A aplicação estará disponível em `http://localhost:8080` (ou outra porta indicada no terminal).
 
-## 🤝 Como Contribuir
+## 👨‍💻 Desenvolvedor
 
-Contribuições são sempre bem-vindas! Se você tem alguma sugestão para melhorar o projeto, siga os passos abaixo:
-
-1.  Faça um **Fork** do projeto.
-2.  Crie uma nova **Branch** (`git checkout -b feature/sua-feature`).
-3.  Faça o **Commit** das suas alterações (`git commit -m 'Adiciona nova feature'`).
-4.  Faça o **Push** para a Branch (`git push origin feature/sua-feature`).
-5.  Abra um **Pull Request**.
+- **Nome:** Ylson dos Santos Queiroz Filho  
+- **GitHub:** [YlsonSantos](https://github.com/YlsonSantos)  
+- **LinkedIn:** [ylson-santos](https://www.linkedin.com/in/ylson-santos)  
 
 ## 📄 Licença
 
